@@ -12,7 +12,6 @@
             --overlay-color: rgba(0,0,0,0.6);
             --bg-light: #fdfaf7;
             --text-dark: #4a4a4a;
-            --soft-gold: #f4e9e0;
         }
 
         * { box-sizing: border-box; }
@@ -41,50 +40,52 @@
             font-family: 'Great Vibes', cursive;
             font-size: clamp(3.5rem, 10vw, 6rem);
             color: var(--primary-gold);
-            margin: 15px 0; animation: zoomFade 2.5s infinite alternate;
+            margin: 15px 0;
         }
 
-        @keyframes zoomFade {
-            0% { transform: scale(1); } 100% { transform: scale(1.05); }
-        }
-
-        #search-container { margin-top: 30px; }
         #search-container input {
             padding: 12px 20px; border-radius: 25px; border: none;
-            width: 280px; max-width: 90%; text-align: center; margin-bottom: 15px;
+            width: 280px; max-width: 90%; text-align: center; margin-bottom: 15px; outline: none;
+        }
+
+        .btn-open {
+            padding: 12px 35px; background: var(--primary-gold); color: white;
+            border: none; border-radius: 30px; cursor: pointer; letter-spacing: 2px;
         }
 
         .guest-name { font-size: 1.8rem; font-weight: 500; color: var(--primary-gold); margin-bottom: 25px; text-transform: uppercase; }
 
-        .btn-open {
-            padding: 12px 35px; background: var(--primary-gold); color: white;
-            border: none; border-radius: 30px; cursor: pointer; letter-spacing: 2px; transition: 0.3s;
-        }
-
         /* --- PAGE 2: MAIN CONTENT --- */
         #main-content { display: none; opacity: 0; transition: opacity 1.5s ease; }
-        section { padding: 80px 20px; max-width: 900px; margin: auto; text-align: center; }
-        h3 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--primary-gold); }
+        
+        section { padding: 60px 20px; max-width: 800px; margin: auto; text-align: center; }
 
-        .gallery-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 40px 0; }
-        .gallery-item { width: 100%; height: 250px; object-fit: cover; border-radius: 20px; }
+        .scripture { margin-bottom: 40px; font-style: italic; }
+        .verse-indo { font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 10px; }
+        .verse-ref { font-weight: bold; color: var(--primary-gold); letter-spacing: 2px; }
 
-        /* --- COMMENT SECTION (WITH ANON) --- */
+        h3 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--primary-gold); margin-top: 0; }
+
+        .gallery-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 30px 0; }
+        .gallery-item { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; }
+
+        /* --- BUKU TAMU & ANONIM --- */
         .comment-section {
-            background: white; padding: 30px; border-radius: 25px;
-            text-align: left; border: 1px solid #f0f0f0; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            background: white; padding: 30px; border-radius: 20px;
+            text-align: left; border: 1px solid #eee; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .comment-form input, .comment-form textarea {
-            width: 100%; padding: 12px; margin-bottom: 10px;
-            border: 1px solid #ddd; border-radius: 10px; font-family: inherit;
+            width: 100%; padding: 12px; margin-bottom: 12px;
+            border: 1px solid #ddd; border-radius: 8px; font-family: inherit;
         }
 
-        .anon-wrapper {
-            display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 0.85rem; color: #666;
+        .anon-option {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+            font-size: 0.9rem; color: #555; cursor: pointer;
         }
 
-        .anon-wrapper input { width: auto; margin: 0; cursor: pointer; }
+        .anon-option input { width: auto; margin: 0; cursor: pointer; }
 
         .hidden-up { transform: translateY(-100vh); }
         .show-content { display: block !important; opacity: 1 !important; }
@@ -103,20 +104,26 @@
             <input type="text" id="nameInputManual" placeholder="Ketik nama lengkap Anda...">
             <br>
             <button class="btn-open" id="searchBtn" onclick="manualSearch()">CEK DAFTAR</button>
-            <div id="error-message" style="display:none; color:#ff6b6b; margin-top:10px; font-size:0.8rem;">Nama tidak ditemukan.</div>
+            <div id="error-message" style="display:none; color:#ff6b6b; margin-top:10px;">Nama tidak ditemukan.</div>
         </div>
 
         <div id="guest-found-area" style="display: none; margin-top: 25px;">
-            <p style="font-size:0.8rem; letter-spacing:2px;">KAMI MENGUNDANG ANDA:</p>
+            <p style="font-size:0.7rem; letter-spacing:2px; opacity:0.8;">KAMI MENGUNDANG ANDA:</p>
             <div class="guest-name" id="guest-target"></div>
             <button class="btn-open" onclick="openInvitation()">BUKA UNDANGAN</button>
         </div>
     </div>
 
     <div id="main-content">
-        <section>
+        <section id="intro">
+            <div class="scripture">
+                <p class="verse-indo">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya."</p>
+                <p class="verse-ref">(AR-RUM: 21)</p>
+            </div>
+            
             <h3>Assalamu’alaikum</h3>
-            <p>Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan.</p>
+            <p>Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Dengan memohon rahmat dan ridho-Nya, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara kami.</p>
+
             <div class="gallery-container">
                 <img class="gallery-item" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600" alt="G1">
                 <img class="gallery-item" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600" alt="G2">
@@ -131,10 +138,10 @@
                     <input type="text" id="guestName" placeholder="Nama Anda" readonly>
                     <textarea id="guestComment" rows="3" placeholder="Tulis ucapan doa..."></textarea>
                     
-                    <div class="anon-wrapper">
+                    <label class="anon-option">
                         <input type="checkbox" id="isAnon">
-                        <label for="isAnon">Kirim sebagai Anonim (Hamba Allah)</label>
-                    </div>
+                        <span>Kirim sebagai Anonim (Hamba Allah)</span>
+                    </label>
 
                     <button class="btn-send" id="submitBtn" onclick="submitToSheets()" style="width:100%; padding:15px; background:var(--primary-gold); color:white; border:none; border-radius:25px; cursor:pointer; font-weight:bold;">Kirim Ucapan</button>
                 </div>
@@ -159,7 +166,6 @@
                 checkUrlParam();
             } catch (e) {
                 btn.innerText = "CEK DAFTAR";
-                console.error("Gagal load database");
             }
         }
 
@@ -206,11 +212,11 @@
                 display.innerHTML = '';
                 data.reverse().forEach(item => {
                     const div = document.createElement('div');
-                    div.style.padding = "15px 0"; div.style.borderBottom = "1px solid #fafafa";
+                    div.style.padding = "15px 0"; div.style.borderBottom = "1px solid #eee";
                     div.innerHTML = `<strong style="color:var(--primary-gold);">${item.name}</strong><p style="margin:5px 0 0;">${item.comment}</p>`;
                     display.appendChild(div);
                 });
-            } catch (e) { display.innerHTML = '<p>Gagal memuat ucapan.</p>'; }
+            } catch (e) { display.innerHTML = 'Gagal memuat ucapan.'; }
         }
 
         async function submitToSheets() {
@@ -219,10 +225,10 @@
             const isAnon = document.getElementById('isAnon').checked;
             const comm = document.getElementById('guestComment').value;
             
-            // Logika Nama Anonim
+            // Logika Anonim
             const nameToSubmit = isAnon ? "Hamba Allah" : realName;
 
-            if(!comm) return alert("Tuliskan doa Anda.");
+            if(!comm) return alert("Silakan tulis ucapan Anda.");
             
             btn.disabled = true; btn.innerText = "Mengirim...";
             try {
@@ -232,7 +238,7 @@
                 });
                 document.getElementById('guestComment').value = '';
                 document.getElementById('isAnon').checked = false;
-                alert("Terima kasih!"); 
+                alert("Terima kasih atas doanya!"); 
                 loadComments();
             } catch (e) { 
                 alert("Gagal mengirim."); 
