@@ -61,6 +61,12 @@
             100% { transform: scale(1.05); opacity: 1; }
         }
 
+        /* Seksi Pencarian */
+        #search-container {
+            margin-top: 30px;
+            display: block; /* Pastikan terlihat di awal */
+        }
+
         .guest-label { font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 10px; opacity: 0.9; }
         
         #search-container input {
@@ -73,6 +79,7 @@
             font-family: 'Montserrat', sans-serif;
             margin-bottom: 15px;
             outline: none;
+            color: #333;
         }
 
         .guest-name { 
@@ -106,8 +113,8 @@
             transition: 0.3s;
         }
 
+        .btn-open:hover { transform: scale(1.05); background: #ab8947; }
         .btn-open:disabled { background: #888; cursor: not-allowed; }
-        .btn-open:hover:not(:disabled) { transform: scale(1.05); background: #ab8947; }
 
         /* --- PAGE 2: MAIN CONTENT --- */
         #main-content {
@@ -119,17 +126,6 @@
         section { padding: 80px 20px; max-width: 900px; margin: auto; text-align: center; }
         h3 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--primary-gold); margin-top: 0; }
 
-        .scripture {
-            margin-bottom: 60px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--primary-gold);
-            display: inline-block;
-            max-width: 85%;
-        }
-
-        .verse-indo { font-style: italic; font-size: 1rem; line-height: 1.8; color: #777; }
-        .verse-ref { font-weight: 500; color: var(--primary-gold); letter-spacing: 2px; font-size: 0.8rem; margin-top: 10px; }
-
         .gallery-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -140,55 +136,14 @@
 
         .gallery-item {
             width: 100%; height: 100%; object-fit: cover;
-            border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-radius: 20px;
             transition: opacity 0.8s ease-in-out;
         }
 
-        .card {
-            background: white; padding: 40px 30px; border-radius: 30px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.03); border: 1px solid #f0f0f0;
-        }
-
-        .event-info { font-size: 1.2rem; margin: 20px 0; font-weight: 500; }
-
-        .gift-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
-        .gift-box {
-            border: 1px solid #e0e0e0; padding: 15px 25px; border-radius: 12px;
-            background: #fff; min-width: 200px;
-        }
-
-        .bank-name { font-weight: bold; font-size: 0.8rem; color: var(--primary-gold); letter-spacing: 1px; }
-        .acc-number { font-size: 1.1rem; margin: 5px 0; display: block; font-weight: 500; }
-
-        /* Buku Tamu Styles */
         .comment-section {
             background-color: #fff; padding: 30px; border-radius: 25px;
-            margin-top: 30px; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-            border: 1px solid #f0f0f0;
+            margin-top: 30px; text-align: left; border: 1px solid #f0f0f0;
         }
-
-        .comment-form input, .comment-form textarea {
-            width: 100%; padding: 12px; margin-bottom: 10px;
-            border: 1px solid #ddd; border-radius: 8px; font-family: 'Montserrat', sans-serif;
-        }
-
-        .anon-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        .btn-send {
-            background: var(--primary-gold); color: white; border: none; padding: 12px;
-            border-radius: 25px; cursor: pointer; font-weight: 600; width: 100%; transition: 0.3s;
-        }
-
-        .comment-display { margin-top: 30px; max-height: 400px; overflow-y: auto; border-top: 1px solid #eee; padding-top: 15px; }
-        .comment-item { padding: 15px 0; border-bottom: 1px solid #fafafa; }
-        .comment-item strong { color: var(--primary-gold); font-size: 0.9rem; }
 
         .hidden-up { transform: translateY(-100vh); }
         .show-content { display: block !important; opacity: 1 !important; }
@@ -196,18 +151,19 @@
         @media (max-width: 768px) {
             .gallery-container { grid-template-columns: 1fr; height: auto; }
             .gallery-item { height: 250px; }
-            h3 { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- PAGE 1 -->
     <div id="opening-page">
         <p style="letter-spacing: 5px;">THE WEDDING OF</p>
         <h2 class="animate-title">Denes & Ana</h2>
         <p>12 . 12 . 2026</p>
 
-        <div id="search-container" style="margin-top: 30px;">
+        <!-- Container Pencarian -->
+        <div id="search-container">
             <p class="guest-label">Cari Nama Anda di Daftar Undangan:</p>
             <input type="text" id="nameInputManual" placeholder="Ketik nama lengkap Anda...">
             <br>
@@ -215,6 +171,7 @@
             <div id="error-message">Nama tidak terdaftar dalam daftar tamu.</div>
         </div>
 
+        <!-- Container Hasil Jika Ditemukan -->
         <div id="guest-found-area" style="display: none; margin-top: 25px;">
             <p class="guest-label">Selamat Datang, Bapak/Ibu/Sdr/i:</p>
             <div class="guest-name" id="guest-target"></div>
@@ -222,15 +179,11 @@
         </div>
     </div>
 
+    <!-- PAGE 2 -->
     <div id="main-content">
-        <section id="intro">
-            <div class="scripture">
-                <p class="verse-indo">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya."</p>
-                <p class="verse-ref">(AR-RUM: 21)</p>
-            </div>
+        <section>
             <h3>Assalamu’alaikum Wr. Wb.</h3>
-            <p>Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Segala puji bagi Allah yang telah menuntun langkah kami hingga sampai pada titik ini.</p>
-            
+            <p>Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan.</p>
             <div class="gallery-container">
                 <img id="img1" class="gallery-item" src="" alt="G1">
                 <img id="img2" class="gallery-item" src="" alt="G2">
@@ -238,84 +191,46 @@
             </div>
         </section>
 
-        <section id="event" style="background-color: var(--soft-gold);">
-            <h3>Waktu & Tempat</h3>
-            <div class="card">
-                <div class="event-info">Sabtu, 12 Desember 2026</div>
-                <p><strong>Gedung Putih Kasih Sayang</strong><br>Jl. Magetan No. 123</p>
-                <a href="#" target="_blank" style="color:var(--primary-gold); text-decoration:none; font-weight:600;">LIHAT LOKASI MAPS →</a>
-            </div>
-        </section>
-
-        <section id="gift">
-            <h3 style="font-size: 2.5rem;">Wedding Gift</h3>
-            <div class="gift-container">
-                <div class="gift-box">
-                    <span class="bank-name">BCA</span>
-                    <span class="acc-number">1234 567 890</span>
-                    <p>a.n Denes</p>
-                </div>
-                <div class="gift-box">
-                    <span class="bank-name">MANDIRI</span>
-                    <span class="acc-number">0987 654 321</span>
-                    <p>a.n Ana</p>
-                </div>
-            </div>
-        </section>
-
         <section id="comments">
             <div class="comment-section">
                 <h3 style="text-align: center; font-size: 2rem;">Buku Tamu</h3>
                 <div class="comment-form">
-                    <input type="text" id="guestName" placeholder="Nama Anda">
+                    <input type="text" id="guestName" placeholder="Nama Anda" readonly>
                     <textarea id="guestComment" rows="3" placeholder="Tulis ucapan doa..."></textarea>
-                    <div class="anon-wrapper">
-                        <input type="checkbox" id="isAnonymous" style="width:18px; height:18px;">
-                        <label for="isAnonymous">Kirim sebagai Anonim</label>
-                    </div>
-                    <button class="btn-send" id="submitBtn" onclick="submitToSheets()">Kirim Ucapan</button>
+                    <button class="btn-send" id="submitBtn" onclick="submitToSheets()" style="width:100%; padding:10px; background:var(--primary-gold); color:white; border:none; border-radius:20px; cursor:pointer;">Kirim Ucapan</button>
                 </div>
-                <div class="comment-display" id="commentDisplay"></div>
+                <div id="commentDisplay" style="margin-top:20px;"></div>
             </div>
         </section>
-
-        <footer style="padding: 60px 20px; text-align: center; background: #eee;">
-            <h3>Denes & Ana</h3>
-            <p style="font-size: 0.8rem; opacity: 0.5;">© 2026 . Designed with Heart</p>
-        </footer>
     </div>
 
     <script>
-        // URL Database Anda
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxA0Z1YA_LZNmlE_XFcPEP_j8pvkazcYZoYLIo7vcRUHKy6CWH1BPfLTOCNRQtOj4rrw/exec';
-
-        // Array dinamis yang akan diisi dari Google Sheets
         let guestDatabase = [];
 
-        // --- 1. AMBIL DAFTAR TAMU DARI SHEETS ---
+        // 1. Ambil data tamu saat pertama kali load
         async function fetchGuestList() {
-            const searchBtn = document.getElementById('searchBtn');
-            searchBtn.disabled = true;
-            searchBtn.innerText = "MEMUAT DATA...";
+            const btn = document.getElementById('searchBtn');
+            btn.disabled = true;
+            btn.innerText = "MEMUAT DATA...";
 
             try {
-                // Menambahkan parameter ?action=getGuests ke URL
                 const response = await fetch(`${scriptURL}?action=getGuests`);
                 guestDatabase = await response.json();
-                console.log("Database tamu berhasil dimuat.");
+                console.log("Database dimuat:", guestDatabase);
                 
-                searchBtn.disabled = false;
-                searchBtn.innerText = "CEK DAFTAR";
+                btn.disabled = false;
+                btn.innerText = "CEK DAFTAR";
 
-                // Setelah database siap, cek jika ada parameter 'to' di URL
+                // Baru jalankan cek URL kalau database sudah ada
                 checkUrlParam();
             } catch (e) {
-                console.error("Gagal mengambil daftar tamu:", e);
-                searchBtn.innerText = "GAGAL MEMUAT";
+                console.error("Gagal load database:", e);
+                btn.innerText = "GAGAL LOAD";
             }
         }
 
-        // --- 2. FUNGSI CARI MANUAL ---
+        // 2. Fungsi Search Manual
         function manualSearch() {
             const val = document.getElementById('nameInputManual').value.trim().toLowerCase();
             const error = document.getElementById('error-message');
@@ -325,10 +240,11 @@
                 showGuestResult(val);
             } else {
                 error.style.display = 'block';
+                error.innerText = "Nama tidak terdaftar dalam daftar tamu.";
             }
         }
 
-        // --- 3. TAMPILKAN HASIL ---
+        // 3. Tampilkan hasil jika nama ada
         function showGuestResult(name) {
             document.getElementById('search-container').style.display = 'none';
             document.getElementById('guest-found-area').style.display = 'block';
@@ -336,7 +252,7 @@
             document.getElementById('guestName').value = name.toUpperCase();
         }
 
-        // --- 4. CEK OTOMATIS LINK (?to=Nama) ---
+        // 4. Cek ?to=Nama di URL
         function checkUrlParam() {
             const urlParams = new URLSearchParams(window.location.search);
             const to = urlParams.get('to');
@@ -355,65 +271,48 @@
             loadComments();
         }
 
-        // --- GALERI & FOTO ---
-        const photoDatabase = [
-            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600", 
-            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600",
-            "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600",
-            "https://images.unsplash.com/photo-1519741497674-611481863552?w=600",
-            "https://images.unsplash.com/photo-1522673607200-1648832cee98?w=600",
-            "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=600"
-        ];
-
+        // --- Sisanya fungsi Gallery & Komentar (sama seperti sebelumnya) ---
+        const photoDatabase = ["https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600", "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600", "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600"];
         let idx = 0;
         function updateGallery() {
             const imgs = [document.getElementById('img1'), document.getElementById('img2'), document.getElementById('img3')];
             if(!imgs[0]) return;
-            imgs.forEach(img => img.style.opacity = 0);
-            setTimeout(() => {
-                imgs.forEach((img, i) => {
-                    img.src = photoDatabase[(idx + i) % photoDatabase.length];
-                    img.style.opacity = 1;
-                });
-            }, 800);
-            idx = (idx + 3) % photoDatabase.length;
+            imgs.forEach((img, i) => { img.src = photoDatabase[(idx + i) % photoDatabase.length]; });
+            idx = (idx + 1) % photoDatabase.length;
         }
 
-        // --- SISTEM KOMENTAR ---
         async function loadComments() {
             const display = document.getElementById('commentDisplay');
-            display.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:#888;">Memuat doa...</p>';
+            display.innerHTML = 'Memuat doa...';
             try {
                 const res = await fetch(scriptURL);
                 const data = await res.json();
                 display.innerHTML = '';
                 data.reverse().forEach(item => {
                     const div = document.createElement('div');
-                    div.className = 'comment-item';
-                    const name = (item.isAnon === true || item.isAnon === "true") ? 'Anonim' : item.name;
-                    div.innerHTML = `<strong>${name}</strong><p>${item.comment}</p>`;
+                    div.style.borderBottom = "1px solid #eee";
+                    div.style.padding = "10px 0";
+                    div.innerHTML = `<strong>${item.name}</strong><p>${item.comment}</p>`;
                     display.appendChild(div);
                 });
-            } catch (e) { display.innerHTML = '<p>Gagal memuat ucapan.</p>'; }
+            } catch (e) { display.innerHTML = 'Gagal memuat.'; }
         }
 
         async function submitToSheets() {
             const btn = document.getElementById('submitBtn');
-            const name = document.getElementById('guestName');
-            const comm = document.getElementById('guestComment');
-            const anon = document.getElementById('isAnonymous');
-            if(!name.value || !comm.value) return alert("Lengkapi data!");
-            
+            const name = document.getElementById('guestName').value;
+            const comm = document.getElementById('guestComment').value;
+            if(!comm) return alert("Tulis ucapan dulu!");
             btn.disabled = true; btn.innerText = "Mengirim...";
             try {
-                await fetch(scriptURL, { method: 'POST', body: JSON.stringify({ name: name.value, comment: comm.value, isAnon: anon.checked }) });
-                comm.value = ''; alert("Terima kasih!"); loadComments();
+                await fetch(scriptURL, { method: 'POST', body: JSON.stringify({ name, comment: comm }) });
+                document.getElementById('guestComment').value = '';
+                alert("Terima kasih!"); loadComments();
             } catch (e) { alert("Error!"); } finally { btn.disabled = false; btn.innerText = "Kirim Ucapan"; }
         }
 
-        // Jalankan fetch saat halaman dimuat
         window.onload = () => {
-            fetchGuestList();
+            fetchGuestList(); // Panggil data dari Sheets
             updateGallery();
             setInterval(updateGallery, 5000);
         };
