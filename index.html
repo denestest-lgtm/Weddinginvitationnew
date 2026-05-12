@@ -155,7 +155,31 @@
             border: 1px solid #ddd; border-radius: 8px; font-family: 'Montserrat', sans-serif;
         }
 
-        .anon-wrapper
+        /* --- PERBAIKAN ANON WRAPPER --- */
+        .anon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            padding: 5px 0;
+        }
+
+        .anon-wrapper input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .anon-wrapper label {
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #666;
+            user-select: none;
+        }
+
         .btn-send {
             background: var(--primary-gold); color: white; border: none;
             padding: 12px 30px; border-radius: 20px; cursor: pointer;
@@ -263,10 +287,12 @@
                 <div class="comment-form">
                     <input type="text" id="guestName" readonly style="background: #f5f5f5;" placeholder="Nama Anda">
                     <textarea id="guestComment" rows="4" placeholder="Tulis ucapan & doa restu..."></textarea>
+                    
                     <div class="anon-wrapper" onclick="toggleAnon()">
                         <input type="checkbox" id="isAnonymous" onclick="event.stopPropagation()">
-                        <label style="cursor:pointer;">Kirim sebagai Anonim (Hamba Allah)</label>
+                        <label>Kirim sebagai Anonim (Hamba Allah)</label>
                     </div>
+                    
                     <button class="btn-send" id="submitBtn" onclick="submitToSheets()">Kirim Ucapan</button>
                 </div>
                 <div class="comment-display" id="commentDisplay">
@@ -282,7 +308,6 @@
     </div>
 
     <script>
-        // GANTI DENGAN URL ANDA
         const guestListURL = 'https://script.google.com/macros/s/AKfycbyzQ00kvSZkA8_ZLuSWMjAm5DVNDqZw4SXOxvsdjGy6tORL_ZJqXUW4gMMAVQ47kuiX4Q/exec';
         const commentURL = 'https://script.google.com/macros/s/AKfycbxGYUl7Wf5opI73rSmM8yWoCgXZCaqk-unFlJnU4izfaYjLzyfaYHg9yJsgMhHLgVbJ2w/exec';
 
@@ -295,7 +320,7 @@
                 guestDatabase = await response.json();
                 checkUrlParam();
             } catch (e) { 
-                console.error("Gagal memuat daftar tamu. Gunakan mode manual."); 
+                console.error("Gagal memuat daftar tamu."); 
             }
         }
 
@@ -399,14 +424,13 @@
                 loadComments();
                 alert("Terima kasih atas ucapannya!");
             } catch (e) {
-                alert("Gagal mengirim ucapan. Coba lagi nanti.");
+                alert("Gagal mengirim ucapan.");
             } finally {
                 btn.disabled = false;
                 btn.innerText = "Kirim Ucapan";
             }
         }
 
-        // Inisialisasi
         fetchGuestList();
     </script>
 </body>
