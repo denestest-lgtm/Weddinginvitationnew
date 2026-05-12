@@ -155,15 +155,15 @@
             border: 1px solid #ddd; border-radius: 8px; font-family: 'Montserrat', sans-serif;
         }
 
-        /* --- PERBAIKAN ANON WRAPPER --- */
+        /* --- PERBAIKAN POSISI CHECKBOX ANONIM --- */
         .anon-wrapper {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: flex-start; /* Memaksa ke kiri */
             gap: 10px;
-            margin-bottom: 15px;
+            margin: 10px 0 20px 0;
             cursor: pointer;
-            padding: 5px 0;
+            width: 100%;
         }
 
         .anon-wrapper input[type="checkbox"] {
@@ -177,6 +177,7 @@
             cursor: pointer;
             font-size: 0.85rem;
             color: #666;
+            margin: 0;
             user-select: none;
         }
 
@@ -288,6 +289,7 @@
                     <input type="text" id="guestName" readonly style="background: #f5f5f5;" placeholder="Nama Anda">
                     <textarea id="guestComment" rows="4" placeholder="Tulis ucapan & doa restu..."></textarea>
                     
+                    <!-- PERBAIKAN: Checkbox dan Label dalam satu baris rata kiri -->
                     <div class="anon-wrapper" onclick="toggleAnon()">
                         <input type="checkbox" id="isAnonymous" onclick="event.stopPropagation()">
                         <label>Kirim sebagai Anonim (Hamba Allah)</label>
