@@ -56,36 +56,79 @@
         .guest-name { font-size: 1.8rem; font-weight: 500; color: var(--primary-gold); margin-bottom: 25px; text-transform: uppercase; }
 
         /* --- PAGE 2: MAIN CONTENT --- */
-        #main-content { display: none; opacity: 0; transition: opacity 1.5s ease; }
+        #main-content { 
+            display: none; 
+            opacity: 0; 
+            transition: opacity 1.5s ease;
+            position: relative;
+            z-index: 1;
+        }
         
-        section { padding: 60px 20px; max-width: 800px; margin: auto; text-align: center; }
+        section { padding: 80px 20px; max-width: 800px; margin: auto; text-align: center; }
 
-        .scripture { margin-bottom: 40px; font-style: italic; }
-        .verse-indo { font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 10px; }
-        .verse-ref { font-weight: bold; color: var(--primary-gold); letter-spacing: 2px; }
+        /* SURAH AR-RUM STYLE */
+        .scripture-box {
+            margin-bottom: 50px;
+            padding: 30px;
+            border-bottom: 1px double var(--primary-gold);
+            border-top: 1px double var(--primary-gold);
+        }
+        .verse-indo { 
+            font-size: 1.1rem; 
+            line-height: 1.8; 
+            color: #555; 
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        .verse-ref { 
+            font-weight: bold; 
+            color: var(--primary-gold); 
+            letter-spacing: 3px; 
+            font-size: 0.9rem;
+        }
 
-        h3 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--primary-gold); margin-top: 0; }
+        h3 { font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--primary-gold); margin: 20px 0; }
 
-        .gallery-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 30px 0; }
-        .gallery-item { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; }
+        .gallery-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 40px 0; }
+        .gallery-item { width: 100%; height: 250px; object-fit: cover; border-radius: 15px; }
 
-        /* --- BUKU TAMU & ANONIM --- */
+        /* --- BUKU TAMU & ANONIM BOX --- */
         .comment-section {
-            background: white; padding: 30px; border-radius: 20px;
-            text-align: left; border: 1px solid #eee; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            background: #fff; padding: 40px 30px; border-radius: 25px;
+            text-align: left; border: 1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-top: 20px;
         }
 
         .comment-form input, .comment-form textarea {
-            width: 100%; padding: 12px; margin-bottom: 12px;
-            border: 1px solid #ddd; border-radius: 8px; font-family: inherit;
+            width: 100%; padding: 15px; margin-bottom: 15px;
+            border: 1px solid #ddd; border-radius: 12px; font-family: inherit; font-size: 1rem;
         }
 
-        .anon-option {
-            display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
-            font-size: 0.9rem; color: #555; cursor: pointer;
+        /* PERBAIKAN TAMPILAN ANONIM */
+        .anon-container {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px;
+            margin: 10px 0 25px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            cursor: pointer;
         }
 
-        .anon-option input { width: auto; margin: 0; cursor: pointer; }
+        .anon-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .anon-label {
+            font-size: 0.95rem;
+            color: #444;
+            user-select: none;
+            cursor: pointer;
+        }
 
         .hidden-up { transform: translateY(-100vh); }
         .show-content { display: block !important; opacity: 1 !important; }
@@ -104,7 +147,7 @@
             <input type="text" id="nameInputManual" placeholder="Ketik nama lengkap Anda...">
             <br>
             <button class="btn-open" id="searchBtn" onclick="manualSearch()">CEK DAFTAR</button>
-            <div id="error-message" style="display:none; color:#ff6b6b; margin-top:10px;">Nama tidak ditemukan.</div>
+            <div id="error-message" style="display:none; color:#ff6b6b; margin-top:10px;">Nama tidak terdaftar.</div>
         </div>
 
         <div id="guest-found-area" style="display: none; margin-top: 25px;">
@@ -115,39 +158,46 @@
     </div>
 
     <div id="main-content">
-        <section id="intro">
-            <div class="scripture">
-                <p class="verse-indo">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya."</p>
-                <p class="verse-ref">(AR-RUM: 21)</p>
+        <section id="content-area">
+            
+            <div class="scripture-box">
+                <p class="verse-indo">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang."</p>
+                <p class="verse-ref">QS. AR-RUM: 21</p>
             </div>
             
-            <h3>Assalamu’alaikum</h3>
-            <p>Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Dengan memohon rahmat dan ridho-Nya, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara kami.</p>
+            <h3>Assalamu’alaikum Wr. Wb.</h3>
+            <p>Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Dengan memohon rahmat dan ridho-Nya, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.</p>
 
             <div class="gallery-container">
-                <img class="gallery-item" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600" alt="G1">
-                <img class="gallery-item" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600" alt="G2">
-                <img class="gallery-item" src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600" alt="G3">
+                <img class="gallery-item" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600" alt="Foto 1">
+                <img class="gallery-item" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600" alt="Foto 2">
+                <img class="gallery-item" src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600" alt="Foto 3">
             </div>
         </section>
 
-        <section id="comments">
+        <section id="guestbook">
             <div class="comment-section">
-                <h3 style="text-align: center; font-size: 2rem;">Buku Tamu</h3>
+                <h3 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px;">Buku Tamu</h3>
+                
                 <div class="comment-form">
                     <input type="text" id="guestName" placeholder="Nama Anda" readonly>
-                    <textarea id="guestComment" rows="3" placeholder="Tulis ucapan doa..."></textarea>
+                    <textarea id="guestComment" rows="4" placeholder="Tulis ucapan doa..."></textarea>
                     
-                    <label class="anon-option">
-                        <input type="checkbox" id="isAnon">
-                        <span>Kirim sebagai Anonim (Hamba Allah)</span>
-                    </label>
+                    <div class="anon-container" onclick="document.getElementById('isAnon').click()">
+                        <input type="checkbox" id="isAnon" onclick="event.stopPropagation()">
+                        <span class="anon-label">Kirim sebagai Anonim (Hamba Allah)</span>
+                    </div>
 
-                    <button class="btn-send" id="submitBtn" onclick="submitToSheets()" style="width:100%; padding:15px; background:var(--primary-gold); color:white; border:none; border-radius:25px; cursor:pointer; font-weight:bold;">Kirim Ucapan</button>
+                    <button class="btn-send" id="submitBtn" onclick="submitToSheets()" style="width:100%; padding:18px; background:var(--primary-gold); color:white; border:none; border-radius:30px; cursor:pointer; font-weight:bold; font-size: 1rem; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);">Kirim Ucapan</button>
                 </div>
-                <div id="commentDisplay" style="margin-top:30px; max-height: 400px; overflow-y: auto;"></div>
+
+                <div id="commentDisplay" style="margin-top:40px; border-top: 1px solid #eee; padding-top: 20px;"></div>
             </div>
         </section>
+
+        <footer style="padding: 50px; text-align: center; font-size: 0.8rem; opacity: 0.5;">
+            &copy; 2026 Denes & Ana Wedding
+        </footer>
     </div>
 
     <script>
@@ -158,7 +208,7 @@
 
         async function fetchGuestList() {
             const btn = document.getElementById('searchBtn');
-            btn.innerText = "MEMUAT DATA...";
+            btn.innerText = "MEMUAT...";
             try {
                 const response = await fetch(`${databaseURL}?action=getGuests`);
                 guestDatabase = await response.json();
@@ -205,15 +255,15 @@
 
         async function loadComments() {
             const display = document.getElementById('commentDisplay');
-            display.innerHTML = '<p style="text-align:center; color:#999;">Memuat ucapan...</p>';
+            display.innerHTML = '<p style="text-align:center;">Memuat ucapan...</p>';
             try {
                 const res = await fetch(commentURL);
                 const data = await res.json();
                 display.innerHTML = '';
                 data.reverse().forEach(item => {
                     const div = document.createElement('div');
-                    div.style.padding = "15px 0"; div.style.borderBottom = "1px solid #eee";
-                    div.innerHTML = `<strong style="color:var(--primary-gold);">${item.name}</strong><p style="margin:5px 0 0;">${item.comment}</p>`;
+                    div.style.padding = "20px 0"; div.style.borderBottom = "1px solid #f5f5f5";
+                    div.innerHTML = `<strong style="color:var(--primary-gold); display:block; margin-bottom:5px;">${item.name}</strong><p style="margin:0; line-height:1.5;">${item.comment}</p>`;
                     display.appendChild(div);
                 });
             } catch (e) { display.innerHTML = 'Gagal memuat ucapan.'; }
@@ -225,10 +275,9 @@
             const isAnon = document.getElementById('isAnon').checked;
             const comm = document.getElementById('guestComment').value;
             
-            // Logika Anonim
             const nameToSubmit = isAnon ? "Hamba Allah" : realName;
 
-            if(!comm) return alert("Silakan tulis ucapan Anda.");
+            if(!comm) return alert("Silakan tulis pesan/doa Anda.");
             
             btn.disabled = true; btn.innerText = "Mengirim...";
             try {
@@ -238,10 +287,10 @@
                 });
                 document.getElementById('guestComment').value = '';
                 document.getElementById('isAnon').checked = false;
-                alert("Terima kasih atas doanya!"); 
+                alert("Ucapan terkirim!"); 
                 loadComments();
             } catch (e) { 
-                alert("Gagal mengirim."); 
+                alert("Gagal mengirim ucapan."); 
             } finally { 
                 btn.disabled = false; btn.innerText = "Kirim Ucapan"; 
             }
