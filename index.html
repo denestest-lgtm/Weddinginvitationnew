@@ -118,13 +118,13 @@
         }
 
         section { padding: 80px 20px; max-width: 900px; margin: auto; text-align: center; }
-        h3 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--primary-gold); }
+        h3 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--primary-gold); margin-top: 0; }
 
         .gallery-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
-            margin-top: 50px;
+            margin: 40px 0;
         }
 
         .gallery-item {
@@ -133,8 +133,13 @@
         }
 
         .comment-section {
-            background-color: #fff; padding: 30px; border-radius: 25px;
-            margin-top: 30px; text-align: left; border: 1px solid #f0f0f0;
+            background: white; padding: 30px; border-radius: 25px;
+            text-align: left; border: 1px solid #f0f0f0; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        }
+
+        .comment-form input, .comment-form textarea {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            border: 1px solid #ddd; border-radius: 10px; font-family: inherit;
         }
 
         .hidden-up { transform: translateY(-100vh); }
@@ -157,7 +162,7 @@
             <input type="text" id="nameInputManual" placeholder="Ketik nama lengkap Anda...">
             <br>
             <button class="btn-open" id="searchBtn" onclick="manualSearch()">CEK DAFTAR</button>
-            <div id="error-message">Nama tidak ditemukan.</div>
+            <div id="error-message">Nama tidak terdaftar. Mohon gunakan nama lengkap.</div>
         </div>
 
         <div id="guest-found-area" style="display: none; margin-top: 25px;">
@@ -172,9 +177,9 @@
             <h3>Assalamu’alaikum Wr. Wb.</h3>
             <p>Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan.</p>
             <div class="gallery-container">
-                <img id="img1" class="gallery-item" src="" alt="G1">
-                <img id="img2" class="gallery-item" src="" alt="G2">
-                <img id="img3" class="gallery-item" src="" alt="G3">
+                <img class="gallery-item" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600" alt="G1">
+                <img class="gallery-item" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600" alt="G2">
+                <img class="gallery-item" src="https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600" alt="G3">
             </div>
         </section>
 
@@ -184,55 +189,47 @@
                 <div class="comment-form">
                     <input type="text" id="guestName" placeholder="Nama Anda" readonly>
                     <textarea id="guestComment" rows="3" placeholder="Tulis ucapan doa..."></textarea>
-                    <button class="btn-send" id="submitBtn" onclick="submitToSheets()" style="width:100%; padding:12px; background:var(--primary-gold); color:white; border:none; border-radius:25px; cursor:pointer; font-weight:bold;">Kirim Ucapan</button>
+                    <button class="btn-send" id="submitBtn" onclick="submitToSheets()" style="width:100%; padding:15px; background:var(--primary-gold); color:white; border:none; border-radius:25px; cursor:pointer; font-weight:bold;">Kirim Ucapan</button>
                 </div>
-                <div id="commentDisplay" style="margin-top:20px;"></div>
+                <div id="commentDisplay" style="margin-top:30px; max-height: 400px; overflow-y: auto;"></div>
             </div>
         </section>
     </div>
 
     <script>
-        // --- CONFIGURATION ---
-        // 1. URL Script dari Spreadsheet DATABASE TAMU
-        const databaseURL = 'https://script.google.com/macros/s/AKfycbxA0Z1YA_LZNmlE_XFcPEP_j8pvkazcYZoYLIo7vcRUHKy6CWH1BPfLTOCNRQtOj4rrw/exec';
-        
-        // 2. URL Script dari Spreadsheet BUKU TAMU (UCAPAN)
-        const commentURL = 'https://script.google.com/macros/s/AKfycbxl_mCY-4XYfcD9yYw5CanrM-jOHTTlG8n44QE74hoVVf5UFaKcfgHmhkRgLou2kyE1pg/exec';
+        // --- DATA BINDING ---
+        const databaseURL = 'https://script.google.com/macros/s/AKfycbyzQ00kvSZkA8_ZLuSWMjAm5DVNDqZw4SXOxvsdjGy6tORL_ZJqXUW4gMMAVQ47kuiX4Q/exec';
+        const commentURL = 'https://script.google.com/macros/s/AKfycbystXUr4XVi5wGqnAFC__0nkuNHMxSnCMt2hZUpJ8W1ISuE6rt0VMHU0dq6V3k9jTDvXg/exec';
 
         let guestDatabase = [];
 
-        // --- LOAD DATA TAMU ---
+        // 1. Fetch Daftar Tamu
         async function fetchGuestList() {
-    const btn = document.getElementById('searchBtn');
-    btn.disabled = true;
-    btn.innerText = "MEMUAT DATA...";
-    
-    try {
-        // Tambahkan mode: 'cors' dan cache control
-        const response = await fetch(`${databaseURL}?action=getGuests`, {
-            method: 'GET',
-            mode: 'cors',
-            redirect: 'follow'
-        });
-        
-        if (!response.ok) throw new Error('Respon network tidak oke');
-        
-        guestDatabase = await response.json();
-        console.log("Data berhasil masuk:", guestDatabase);
-        
-        btn.disabled = false;
-        btn.innerText = "CEK DAFTAR";
-        checkUrlParam();
-    } catch (e) {
-        console.error("Gagal load database:", e);
-        btn.innerText = "GAGAL LOAD (KLIK UNTUK COBA LAGI)";
-        btn.disabled = false;
-        btn.onclick = () => fetchGuestList(); // Biar bisa dicoba klik lagi
-    }
-}
+            const btn = document.getElementById('searchBtn');
+            btn.disabled = true;
+            btn.innerText = "MEMUAT DAFTAR...";
+            
+            try {
+                // Tambahkan parameter ?action=getGuests jika script Google Anda menggunakannya
+                const response = await fetch(`${databaseURL}?action=getGuests`);
+                guestDatabase = await response.json();
+                console.log("Database Tamu Dimuat");
+                
+                btn.disabled = false;
+                btn.innerText = "CEK DAFTAR";
+                checkUrlParam();
+            } catch (e) {
+                console.error("Error Database:", e);
+                btn.innerText = "CEK DAFTAR";
+                btn.disabled = false;
+            }
+        }
+
+        // 2. Fungsi Cari Nama
         function manualSearch() {
             const val = document.getElementById('nameInputManual').value.trim().toLowerCase();
             const error = document.getElementById('error-message');
+            
             if (guestDatabase.includes(val)) {
                 error.style.display = 'none';
                 showGuestResult(val);
@@ -264,19 +261,18 @@
             loadComments();
         }
 
-        // --- SYSTEM BUKU TAMU (UCAPAN) ---
+        // 3. Sistem Ucapan (Komentar)
         async function loadComments() {
             const display = document.getElementById('commentDisplay');
-            display.innerHTML = 'Memuat ucapan...';
+            display.innerHTML = '<p style="text-align:center;">Memuat ucapan...</p>';
             try {
                 const res = await fetch(commentURL);
                 const data = await res.json();
                 display.innerHTML = '';
                 data.reverse().forEach(item => {
                     const div = document.createElement('div');
-                    div.style.padding = "10px 0";
-                    div.style.borderBottom = "1px solid #eee";
-                    div.innerHTML = `<strong>${item.name}</strong><p>${item.comment}</p>`;
+                    div.style.padding = "15px 0"; div.style.borderBottom = "1px solid #eee";
+                    div.innerHTML = `<strong>${item.name}</strong><p style="margin-top:5px;">${item.comment}</p>`;
                     display.appendChild(div);
                 });
             } catch (e) { display.innerHTML = 'Gagal memuat ucapan.'; }
@@ -286,31 +282,20 @@
             const btn = document.getElementById('submitBtn');
             const name = document.getElementById('guestName').value;
             const comm = document.getElementById('guestComment').value;
-            if(!comm) return alert("Silakan tulis ucapan.");
+            if(!comm) return alert("Tuliskan doa Anda.");
             btn.disabled = true; btn.innerText = "Mengirim...";
             try {
-                await fetch(commentURL, { method: 'POST', body: JSON.stringify({ name, comment: comm }) });
+                await fetch(commentURL, { 
+                    method: 'POST', 
+                    body: JSON.stringify({ name, comment: comm }) 
+                });
                 document.getElementById('guestComment').value = '';
-                alert("Ucapan terkirim!"); loadComments();
-            } catch (e) { alert("Gagal mengirim."); } finally { btn.disabled = false; btn.innerText = "Kirim Ucapan"; }
+                alert("Terima kasih!"); loadComments();
+            } catch (e) { alert("Gagal mengirim."); } 
+            finally { btn.disabled = false; btn.innerText = "Kirim Ucapan"; }
         }
 
-        // --- GALLERY ---
-        const photoDatabase = [
-            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600", 
-            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600",
-            "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600"
-        ];
-        function updateGallery() {
-            document.getElementById('img1').src = photoDatabase[0];
-            document.getElementById('img2').src = photoDatabase[1];
-            document.getElementById('img3').src = photoDatabase[2];
-        }
-
-        window.onload = () => {
-            fetchGuestList();
-            updateGallery();
-        };
+        window.onload = fetchGuestList;
     </script>
 </body>
 </html>
