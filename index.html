@@ -64,7 +64,8 @@
         /* SEARCH AREA */
         #search-container input {
             padding: 12px 20px; border-radius: 25px; border: none;
-            width: 280px; max-width: 90%; text-align: center; margin-bottom: 15px; outline: none;
+            width: 280px; max-width: 90%; text-align: center; margin-bottom: 5px; outline: none;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .guest-found-name { font-size: 1.8rem; font-weight: 500; color: var(--primary-gold); margin: 20px 0; text-transform: uppercase; }
@@ -149,7 +150,6 @@
 
         .comment-section {
             background-color: #fff; padding: 30px; border-radius: 25px;
-            margin-top: 0;
             text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
             border: 1px solid #f0f0f0;
         }
@@ -160,21 +160,12 @@
         }
 
         .anon-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding: 12px;
-            background: #fdfaf7;
-            border-radius: 12px;
-            border: 1px dashed var(--primary-gold);
-            cursor: pointer;
+            display: flex; align-items: center; justify-content: flex-start; gap: 10px;
+            margin-bottom: 20px; padding: 12px; background: #fdfaf7;
+            border-radius: 12px; border: 1px dashed var(--primary-gold); cursor: pointer;
         }
 
-        .anon-wrapper input[type="checkbox"] {
-            width: 18px; height: 18px; margin: 0; cursor: pointer;
-        }
+        .anon-wrapper input[type="checkbox"] { width: 18px; height: 18px; margin: 0; cursor: pointer; }
 
         .btn-send {
             background: var(--primary-gold); color: white; border: none;
@@ -234,7 +225,6 @@
                 <h3>Assalamu’alaikum Wr. Wb.</h3>
                 <div class="speech-text">
                     <p>Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Segala puji bagi Allah yang telah menuntun langkah kami hingga sampai pada titik ini.</p>
-                    <p>Berawal dari pertemuan yang tak disangka, tumbuh menjadi keyakinan untuk saling menjaga.</p>
                 </div>
             </div>
 
@@ -248,10 +238,10 @@
         <section id="event" style="background-color: var(--soft-gold);">
             <h3>Waktu & Tempat</h3>
             <div class="card">
-                <p>Sabtu, 08 Agustus 2026</p>
-                <div class="event-info">Akad: 09:00 WIB | Resepsi: 11:00 WIB</div>
-                <p><strong>Gedung Putih Kasih Sayang</strong></p>
-                <a href="https://maps.app.goo.gl/oCcwoM7Ms6xamp4G9" target="_blank" style="color:var(--primary-gold); text-decoration:none;">LIHAT GOOGLE MAPS →</a>
+                <p>Sabtu, 12 Desember 2026</p>
+                <div class="event-info">Akad: 09:00 WIB | Resepsi: 11:00 - 14:00 WIB</div>
+                <p><strong>Gedung Putih Kasih Sayang</strong><br>Jl. magetan jalan-jalan</p>
+                <a href="#" target="_blank" style="color:var(--primary-gold); text-decoration:none; font-weight:500;">LIHAT GOOGLE MAPS →</a>
             </div>
         </section>
 
@@ -276,10 +266,10 @@
                 <h3 style="font-size: 2.2rem; text-align: center;">Buku Tamu</h3>
                 <div class="comment-form">
                     <input type="text" id="guestName" readonly style="background: #f5f5f5;">
-                    <textarea id="guestComment" rows="3" placeholder="Berikan ucapan..."></textarea>
+                    <textarea id="guestComment" rows="3" placeholder="Tulis ucapan doa restu Anda..."></textarea>
                     <div class="anon-wrapper" onclick="document.getElementById('isAnonymous').click()">
                         <input type="checkbox" id="isAnonymous" onclick="event.stopPropagation()">
-                        <label>Kirim sebagai Hamba Allah</label>
+                        <label>Kirim sebagai Anonim (Hamba Allah)</label>
                     </div>
                     <button class="btn-send" id="submitBtn" onclick="submitToSheets()">Kirim Ucapan</button>
                 </div>
@@ -289,6 +279,7 @@
 
         <footer style="padding: 40px; text-align: center;">
             <h3 style="font-size: 2rem;">Denes & Ana</h3>
+            <p style="font-size: 0.8rem; opacity: 0.5;">© 2026 . Designed with Heart</p>
         </footer>
     </div>
 
@@ -307,6 +298,7 @@
             } catch (e) { console.error("Database Error"); }
         }
 
+        // FUNGSI PENCARIAN PINTAR DENGAN TOMBOL SARAN
         function manualSearch() {
             const val = document.getElementById('nameInputManual').value.trim().toLowerCase();
             const errorMsg = document.getElementById('error-message');
@@ -317,19 +309,21 @@
 
             if (val.length < 2) return;
 
+            // Filter tamu yang mengandung kata yang diketik
             const filteredGuests = guestDatabase.filter(name => name.toLowerCase().includes(val));
 
             if (filteredGuests.length > 0 && filteredGuests.length <= 4) {
+                // Tampilkan sebagai tombol jika 1-4 nama ditemukan
                 filteredGuests.forEach(name => {
                     const btn = document.createElement('button');
                     const formattedName = name.split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
                     btn.innerText = formattedName;
-                    btn.style.cssText = "padding: 8px 15px; border-radius: 20px; border: 1px solid var(--primary-gold); background: white; color: var(--primary-gold); cursor: pointer; font-size: 0.8rem;";
+                    btn.style.cssText = "padding: 8px 15px; border-radius: 20px; border: 1px solid var(--primary-gold); background: white; color: var(--primary-gold); cursor: pointer; font-size: 0.8rem; font-family: 'Montserrat';";
                     btn.onclick = () => showGuestFound(name);
                     suggestionContainer.appendChild(btn);
                 });
             } else if (filteredGuests.length > 4) {
-                errorMsg.innerText = "Banyak nama ditemukan, mohon ketik lebih spesifik.";
+                errorMsg.innerText = "Ditemukan beberapa nama, mohon ketik lebih spesifik.";
                 errorMsg.style.display = 'block';
             } else {
                 errorMsg.innerText = "Nama tidak terdaftar.";
@@ -363,8 +357,12 @@
             loadComments();
         }
 
-        // GALERI & KOMENTAR (Logika sama seperti sebelumnya)
-        const photoDatabase = ["https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600", "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600", "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600"];
+        // GALERI DINAMIS
+        const photoDatabase = [
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600", 
+            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600",
+            "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600"
+        ];
         let currentIndex = 0;
         function updateGallery() {
             const img1 = document.getElementById('img1'), img2 = document.getElementById('img2'), img3 = document.getElementById('img3');
@@ -399,7 +397,8 @@
                 await fetch(commentURL, { method: 'POST', body: JSON.stringify({ name: loggedInName, comment: comm.value, isAnon: anon.checked }) });
                 comm.value = ''; anon.checked = false;
                 loadComments();
-            } catch (e) { }
+                alert("Ucapan terkirim!");
+            } catch (e) { alert("Gagal mengirim."); }
             finally { btn.disabled = false; btn.innerText = "Kirim Ucapan"; }
         }
 
