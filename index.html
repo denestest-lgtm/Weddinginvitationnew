@@ -61,12 +61,7 @@
             100% { transform: scale(1.05); opacity: 1; }
         }
 
-        /* Seksi Pencarian */
-        #search-container {
-            margin-top: 30px;
-            display: block; /* Pastikan terlihat di awal */
-        }
-
+        #search-container { margin-top: 30px; }
         .guest-label { font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 10px; opacity: 0.9; }
         
         #search-container input {
@@ -113,7 +108,6 @@
             transition: 0.3s;
         }
 
-        .btn-open:hover { transform: scale(1.05); background: #ab8947; }
         .btn-open:disabled { background: #888; cursor: not-allowed; }
 
         /* --- PAGE 2: MAIN CONTENT --- */
@@ -124,20 +118,18 @@
         }
 
         section { padding: 80px 20px; max-width: 900px; margin: auto; text-align: center; }
-        h3 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--primary-gold); margin-top: 0; }
+        h3 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--primary-gold); }
 
         .gallery-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             margin-top: 50px;
-            height: 400px;
         }
 
         .gallery-item {
-            width: 100%; height: 100%; object-fit: cover;
+            width: 100%; height: 250px; object-fit: cover;
             border-radius: 20px;
-            transition: opacity 0.8s ease-in-out;
         }
 
         .comment-section {
@@ -149,29 +141,25 @@
         .show-content { display: block !important; opacity: 1 !important; }
 
         @media (max-width: 768px) {
-            .gallery-container { grid-template-columns: 1fr; height: auto; }
-            .gallery-item { height: 250px; }
+            .gallery-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- PAGE 1 -->
     <div id="opening-page">
         <p style="letter-spacing: 5px;">THE WEDDING OF</p>
         <h2 class="animate-title">Denes & Ana</h2>
         <p>12 . 12 . 2026</p>
 
-        <!-- Container Pencarian -->
         <div id="search-container">
             <p class="guest-label">Cari Nama Anda di Daftar Undangan:</p>
             <input type="text" id="nameInputManual" placeholder="Ketik nama lengkap Anda...">
             <br>
             <button class="btn-open" id="searchBtn" onclick="manualSearch()">CEK DAFTAR</button>
-            <div id="error-message">Nama tidak terdaftar dalam daftar tamu.</div>
+            <div id="error-message">Nama tidak ditemukan.</div>
         </div>
 
-        <!-- Container Hasil Jika Ditemukan -->
         <div id="guest-found-area" style="display: none; margin-top: 25px;">
             <p class="guest-label">Selamat Datang, Bapak/Ibu/Sdr/i:</p>
             <div class="guest-name" id="guest-target"></div>
@@ -179,7 +167,6 @@
         </div>
     </div>
 
-    <!-- PAGE 2 -->
     <div id="main-content">
         <section>
             <h3>Assalamu’alaikum Wr. Wb.</h3>
@@ -197,7 +184,7 @@
                 <div class="comment-form">
                     <input type="text" id="guestName" placeholder="Nama Anda" readonly>
                     <textarea id="guestComment" rows="3" placeholder="Tulis ucapan doa..."></textarea>
-                    <button class="btn-send" id="submitBtn" onclick="submitToSheets()" style="width:100%; padding:10px; background:var(--primary-gold); color:white; border:none; border-radius:20px; cursor:pointer;">Kirim Ucapan</button>
+                    <button class="btn-send" id="submitBtn" onclick="submitToSheets()" style="width:100%; padding:12px; background:var(--primary-gold); color:white; border:none; border-radius:25px; cursor:pointer; font-weight:bold;">Kirim Ucapan</button>
                 </div>
                 <div id="commentDisplay" style="margin-top:20px;"></div>
             </div>
@@ -205,46 +192,44 @@
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxA0Z1YA_LZNmlE_XFcPEP_j8pvkazcYZoYLIo7vcRUHKy6CWH1BPfLTOCNRQtOj4rrw/exec';
+        // --- CONFIGURATION ---
+        // 1. URL Script dari Spreadsheet DATABASE TAMU
+        const databaseURL = 'https://script.google.com/macros/s/AKfycbxA0Z1YA_LZNmlE_XFcPEP_j8pvkazcYZoYLIo7vcRUHKy6CWH1BPfLTOCNRQtOj4rrw/exec';
+        
+        // 2. URL Script dari Spreadsheet BUKU TAMU (UCAPAN)
+        const commentURL = 'https://script.google.com/macros/s/AKfycbxl_mCY-4XYfcD9yYw5CanrM-jOHTTlG8n44QE74hoVVf5UFaKcfgHmhkRgLou2kyE1pg/exec';
+
         let guestDatabase = [];
 
-        // 1. Ambil data tamu saat pertama kali load
+        // --- LOAD DATA TAMU ---
         async function fetchGuestList() {
             const btn = document.getElementById('searchBtn');
             btn.disabled = true;
             btn.innerText = "MEMUAT DATA...";
-
             try {
-                const response = await fetch(`${scriptURL}?action=getGuests`);
+                const response = await fetch(`${databaseURL}?action=getGuests`);
                 guestDatabase = await response.json();
-                console.log("Database dimuat:", guestDatabase);
-                
                 btn.disabled = false;
                 btn.innerText = "CEK DAFTAR";
-
-                // Baru jalankan cek URL kalau database sudah ada
                 checkUrlParam();
             } catch (e) {
-                console.error("Gagal load database:", e);
-                btn.innerText = "GAGAL LOAD";
+                console.error("Gagal load tamu:", e);
+                btn.innerText = "CEK DAFTAR";
+                btn.disabled = false;
             }
         }
 
-        // 2. Fungsi Search Manual
         function manualSearch() {
             const val = document.getElementById('nameInputManual').value.trim().toLowerCase();
             const error = document.getElementById('error-message');
-            
             if (guestDatabase.includes(val)) {
                 error.style.display = 'none';
                 showGuestResult(val);
             } else {
                 error.style.display = 'block';
-                error.innerText = "Nama tidak terdaftar dalam daftar tamu.";
             }
         }
 
-        // 3. Tampilkan hasil jika nama ada
         function showGuestResult(name) {
             document.getElementById('search-container').style.display = 'none';
             document.getElementById('guest-found-area').style.display = 'block';
@@ -252,15 +237,12 @@
             document.getElementById('guestName').value = name.toUpperCase();
         }
 
-        // 4. Cek ?to=Nama di URL
         function checkUrlParam() {
             const urlParams = new URLSearchParams(window.location.search);
             const to = urlParams.get('to');
             if (to) {
                 const clean = to.replace(/\+/g, ' ').toLowerCase();
-                if (guestDatabase.includes(clean)) {
-                    showGuestResult(clean);
-                }
+                if (guestDatabase.includes(clean)) showGuestResult(clean);
             }
         }
 
@@ -271,50 +253,52 @@
             loadComments();
         }
 
-        // --- Sisanya fungsi Gallery & Komentar (sama seperti sebelumnya) ---
-        const photoDatabase = ["https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600", "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600", "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600"];
-        let idx = 0;
-        function updateGallery() {
-            const imgs = [document.getElementById('img1'), document.getElementById('img2'), document.getElementById('img3')];
-            if(!imgs[0]) return;
-            imgs.forEach((img, i) => { img.src = photoDatabase[(idx + i) % photoDatabase.length]; });
-            idx = (idx + 1) % photoDatabase.length;
-        }
-
+        // --- SYSTEM BUKU TAMU (UCAPAN) ---
         async function loadComments() {
             const display = document.getElementById('commentDisplay');
-            display.innerHTML = 'Memuat doa...';
+            display.innerHTML = 'Memuat ucapan...';
             try {
-                const res = await fetch(scriptURL);
+                const res = await fetch(commentURL);
                 const data = await res.json();
                 display.innerHTML = '';
                 data.reverse().forEach(item => {
                     const div = document.createElement('div');
-                    div.style.borderBottom = "1px solid #eee";
                     div.style.padding = "10px 0";
+                    div.style.borderBottom = "1px solid #eee";
                     div.innerHTML = `<strong>${item.name}</strong><p>${item.comment}</p>`;
                     display.appendChild(div);
                 });
-            } catch (e) { display.innerHTML = 'Gagal memuat.'; }
+            } catch (e) { display.innerHTML = 'Gagal memuat ucapan.'; }
         }
 
         async function submitToSheets() {
             const btn = document.getElementById('submitBtn');
             const name = document.getElementById('guestName').value;
             const comm = document.getElementById('guestComment').value;
-            if(!comm) return alert("Tulis ucapan dulu!");
+            if(!comm) return alert("Silakan tulis ucapan.");
             btn.disabled = true; btn.innerText = "Mengirim...";
             try {
-                await fetch(scriptURL, { method: 'POST', body: JSON.stringify({ name, comment: comm }) });
+                await fetch(commentURL, { method: 'POST', body: JSON.stringify({ name, comment: comm }) });
                 document.getElementById('guestComment').value = '';
-                alert("Terima kasih!"); loadComments();
-            } catch (e) { alert("Error!"); } finally { btn.disabled = false; btn.innerText = "Kirim Ucapan"; }
+                alert("Ucapan terkirim!"); loadComments();
+            } catch (e) { alert("Gagal mengirim."); } finally { btn.disabled = false; btn.innerText = "Kirim Ucapan"; }
+        }
+
+        // --- GALLERY ---
+        const photoDatabase = [
+            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600", 
+            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600",
+            "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600"
+        ];
+        function updateGallery() {
+            document.getElementById('img1').src = photoDatabase[0];
+            document.getElementById('img2').src = photoDatabase[1];
+            document.getElementById('img3').src = photoDatabase[2];
         }
 
         window.onload = () => {
-            fetchGuestList(); // Panggil data dari Sheets
+            fetchGuestList();
             updateGallery();
-            setInterval(updateGallery, 5000);
         };
     </script>
 </body>
