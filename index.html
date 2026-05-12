@@ -223,6 +223,15 @@
             <button class="btn-open" id="searchBtn" onclick="manualSearch()">CEK DAFTAR</button>
             <p id="error-message" style="display:none; color:#ff6b6b; margin-top:10px; font-size: 0.8rem;">Nama tidak terdaftar.</p>
         </div>
+        <div id="search-container">
+    <input type="text" id="nameInputManual" placeholder="Ketik nama Anda..." oninput="manualSearch()">
+    
+    <div id="suggestion-list" style="margin-top: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;"></div>
+    
+    <br>
+    <button class="btn-open" id="searchBtn" onclick="manualSearch()">CEK DAFTAR</button>
+    <p id="error-message" style="display:none; color:#ff6b6b; margin-top:10px; font-size: 0.8rem;"></p>
+</div>
 
         <div id="guest-found-area" style="display: none; margin-top: 25px;">
             <p style="font-size:0.7rem; letter-spacing:2px; opacity:0.8;">KAMI MENGUNDANG ANDA:</p>
@@ -333,27 +342,36 @@
         function manualSearch() {
     const val = document.getElementById('nameInputManual').value.trim().toLowerCase();
     const errorMsg = document.getElementById('error-message');
+    const suggestionContainer = document.getElementById('suggestion-list');
     
-    // Validasi input kosong
-    if (val === "") {
-        errorMsg.innerText = "Silakan masukkan nama Anda.";
-        errorMsg.style.display = 'block';
-        return;
-    }
+    // Reset tampilan setiap kali mengetik
+    suggestionContainer.innerHTML = '';
+    errorMsg.style.display = 'none';
 
-    // Mencari tamu yang namanya mengandung kata yang diketik (Partial Match)
+    if (val.length < 2) return; // Mulai mencari setelah 2 huruf
+
+    // Filter database berdasarkan input
     const filteredGuests = guestDatabase.filter(name => name.toLowerCase().includes(val));
 
-    if (filteredGuests.length === 1) {
-        // Jika hanya ketemu 1 nama yang cocok, langsung masuk
-        showGuestFound(filteredGuests[0]);
-        errorMsg.style.display = 'none';
-    } else if (filteredGuests.length > 1) {
-        // Jika ketik "ali" dan ada "ali puji" & "ali yoga", munculkan pesan ini
-        errorMsg.innerText = "Ditemukan beberapa nama yang mirip, mohon ketik lebih lengkap.";
+    if (filteredGuests.length > 0 && filteredGuests.length <= 4) {
+        // JIKA KETEMU 1-4 NAMA: Munculkan tombol pilihan
+        filteredGuests.forEach(name => {
+            const btn = document.createElement('button');
+            const formattedName = name.split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
+            
+            btn.innerText = formattedName;
+            btn.style.cssText = "padding: 8px 15px; border-radius: 20px; border: 1px solid var(--primary-gold); background: white; color: var(--primary-gold); cursor: pointer; font-size: 0.8rem; font-family: 'Montserrat';";
+            
+            // Jika tombol diklik, langsung pilih nama tersebut
+            btn.onclick = () => showGuestFound(name);
+            suggestionContainer.appendChild(btn);
+        });
+    } else if (filteredGuests.length > 4) {
+        // JIKA LEBIH DARI 4 NAMA
+        errorMsg.innerText = "Banyak nama ditemukan, mohon ketik lebih spesifik.";
         errorMsg.style.display = 'block';
     } else {
-        // Jika tidak ada yang mengandung kata tersebut sama sekali
+        // JIKA TIDAK ADA SAMA SEKALI
         errorMsg.innerText = "Nama tidak terdaftar.";
         errorMsg.style.display = 'block';
     }
