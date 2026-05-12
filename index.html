@@ -91,8 +91,9 @@
             transition: opacity 1.5s ease;
         }
 
+        /* PERBAIKAN SPACE: Padding section diperkecil */
         section {
-            padding: 80px 20px;
+            padding: 40px 20px; 
             max-width: 900px;
             margin: auto;
             text-align: center;
@@ -136,14 +137,23 @@
         .event-info { font-size: 1.2rem; margin: 20px 0; font-weight: 500; }
 
         .gift-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
-        .gift-box { border: 1px solid #e0e0e0; padding: 15px 25px; border-radius: 12px; background: #fff; min-width: 200px; }
-        .bank-name { font-weight: bold; font-size: 0.8rem; color: var(--primary-gold); letter-spacing: 1px; }
-        .acc-number { font-size: 1.1rem; margin: 5px 0; display: block; font-weight: 500; }
+        
+        /* PERBAIKAN: Ukuran Gift Box diperkecil sesuai konfirmasi sebelumnya */
+        .gift-box { 
+            border: 1px solid #e0e0e0; 
+            padding: 10px 15px; 
+            border-radius: 12px; 
+            background: #fff; 
+            min-width: 160px; 
+        }
+        .bank-name { font-weight: bold; font-size: 0.75rem; color: var(--primary-gold); letter-spacing: 1px; }
+        .acc-number { font-size: 0.95rem; margin: 5px 0; display: block; font-weight: 500; }
 
         /* --- GUEST BOOK --- */
         .comment-section {
             background-color: #fff; padding: 30px; border-radius: 25px;
-            margin-top: 30px; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            margin-top: 0; /* PERBAIKAN SPACE: Menghilangkan margin atas */
+            text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
             border: 1px solid #f0f0f0;
         }
 
@@ -152,35 +162,37 @@
             border: 1px solid #ddd; border-radius: 8px; font-family: 'Montserrat', sans-serif;
         }
 
-        ..anon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Merapatkan konten ke kiri */
-    gap: 10px; /* Jarak antara checkbox dan teks */
-    margin-bottom: 20px;
-    padding: 15px;
-    background: #fdfaf7; /* Warna latar lembut agar serupa gambar */
-    border-radius: 12px;
-    border: 1px dashed var(--primary-gold);
-    cursor: pointer;
-}
+        /* PERBAIKAN: Posisi Anonim rapat ke kiri dan rapi */
+        .anon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 12px;
+            background: #fdfaf7;
+            border-radius: 12px;
+            border: 1px dashed var(--primary-gold);
+            cursor: pointer;
+        }
 
-.anon-wrapper input[type="checkbox"] {
-    width: 18px; /* Ukuran checkbox yang lebih proporsional */
-    height: 18px;
-    margin: 0;
-    cursor: pointer;
-}
+        .anon-wrapper input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            cursor: pointer;
+        }
 
-.anon-wrapper label {
-    cursor: pointer;
-    font-size: 0.85rem;
-    color: #666;
-    user-select: none; /* Mencegah teks terpilih saat diklik */
-}
+        .anon-wrapper label {
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #666;
+            user-select: none;
+        }
+
         .btn-send {
             background: var(--primary-gold); color: white; border: none;
-            padding: 10px 30px; border-radius: 20px; cursor: pointer;
+            padding: 12px 30px; border-radius: 20px; cursor: pointer;
             font-weight: 500; width: 100%; transition: 0.3s;
         }
 
@@ -194,6 +206,7 @@
         @media (max-width: 768px) {
             .gallery-container { grid-template-columns: 1fr; height: auto; }
             .gallery-item { height: 250px; }
+            section { padding: 30px 20px; }
         }
     </style>
 </head>
@@ -257,38 +270,38 @@
             </div>
         </section>
 
-       <section id="gift">
-    <h3 style="font-size: 2.5rem;">Wedding Gift</h3>
+        <section id="gift">
+            <h3 style="font-size: 2.5rem;">Wedding Gift</h3>
+            <p style="font-size: 0.9rem; color: #666; margin: -10px auto 25px auto; line-height: 1.6; max-width: 600px;">
+                text sementara nanti di ganti
+            </p>
 
-    <!-- TEXT YANG BISA KAMU EDIT ADA DI BAWAH INI -->
-    <p style="font-size: 0.9rem; color: #666; margin: -10px auto 30px auto; line-height: 1.6; max-width: 600px;">
-        text sementara nanti di ganti
-    </p>
-    <!-- ----------------------------------------- -->
+            <div class="gift-container">
+                <div class="gift-box">
+                    <span class="bank-name">BCA</span>
+                    <span class="acc-number">1234 567 890</span>
+                    <p style="margin:0; font-size: 0.8rem;">a.n Denes</p>
+                </div>
+                <div class="gift-box">
+                    <span class="bank-name">MANDIRI</span>
+                    <span class="acc-number">0987 654 321</span>
+                    <p style="margin:0; font-size: 0.8rem;">a.n Ana</p>
+                </div>
+            </div>
+        </section>
 
-    <div class="gift-container">
-        <div class="gift-box">
-            <span class="bank-name">BCA</span>
-            <span class="acc-number">1234 567 890</span>
-            <p>a.n Denes</p>
-        </div>
-        <div class="gift-box">
-            <span class="bank-name">MANDIRI</span>
-            <span class="acc-number">0987 654 321</span>
-            <p>a.n Ana</p>
-        </div>
-    </div>
-</section>
-        <section id="comments">
+        <section id="comments" style="padding-top: 10px;">
             <div class="comment-section">
-                <h3 style="font-size: 2.2rem; text-align: center;">Buku Tamu</h3>
+                <h3 style="font-size: 2.2rem; text-align: center; margin-bottom: 20px;">Buku Tamu</h3>
                 <div class="comment-form">
                     <input type="text" id="guestName" readonly style="background: #f5f5f5; color: #888;">
                     <textarea id="guestComment" rows="3" placeholder="Berikan ucapan & doa restu..."></textarea>
-                    <div class="anon-wrapper">
-                        <input type="checkbox" id="isAnonymous">
+                    
+                    <div class="anon-wrapper" onclick="document.getElementById('isAnonymous').click()">
+                        <input type="checkbox" id="isAnonymous" onclick="event.stopPropagation()">
                         <label for="isAnonymous">Kirim sebagai Hamba Allah</label>
                     </div>
+
                     <button class="btn-send" id="submitBtn" onclick="submitToSheets()">Kirim Ucapan</button>
                 </div>
                 <div class="comment-display" id="commentDisplay"></div>
@@ -303,10 +316,7 @@
     </div>
 
     <script>
-        // LINK 1: UNTUK DAFTAR TAMU (Verifikasi)
         const guestListURL = 'https://script.google.com/macros/s/AKfycbyzQ00kvSZkA8_ZLuSWMjAm5DVNDqZw4SXOxvsdjGy6tORL_ZJqXUW4gMMAVQ47kuiX4Q/exec';
-        
-        // LINK 2: UNTUK BUKU TAMU (Komentar)
         const commentURL = 'https://script.google.com/macros/s/AKfycbxGYUl7Wf5opI73rSmM8yWoCgXZCaqk-unFlJnU4izfaYjLzyfaYHg9yJsgMhHLgVbJ2w/exec';
 
         let guestDatabase = [];
@@ -355,7 +365,6 @@
             loadComments();
         }
 
-        // GALERI
         const photoDatabase = [
             "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600", 
             "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600",
@@ -377,7 +386,6 @@
             currentIndex = (currentIndex + 3) % photoDatabase.length;
         }
 
-        // KOMENTAR
         async function loadComments() {
             const display = document.getElementById('commentDisplay');
             display.innerHTML = '<p style="text-align:center; font-size:0.8rem;">Memuat ucapan...</p>';
