@@ -203,22 +203,33 @@
 
         // --- LOAD DATA TAMU ---
         async function fetchGuestList() {
-            const btn = document.getElementById('searchBtn');
-            btn.disabled = true;
-            btn.innerText = "MEMUAT DATA...";
-            try {
-                const response = await fetch(`${databaseURL}?action=getGuests`);
-                guestDatabase = await response.json();
-                btn.disabled = false;
-                btn.innerText = "CEK DAFTAR";
-                checkUrlParam();
-            } catch (e) {
-                console.error("Gagal load tamu:", e);
-                btn.innerText = "CEK DAFTAR";
-                btn.disabled = false;
-            }
-        }
-
+    const btn = document.getElementById('searchBtn');
+    btn.disabled = true;
+    btn.innerText = "MEMUAT DATA...";
+    
+    try {
+        // Tambahkan mode: 'cors' dan cache control
+        const response = await fetch(`${databaseURL}?action=getGuests`, {
+            method: 'GET',
+            mode: 'cors',
+            redirect: 'follow'
+        });
+        
+        if (!response.ok) throw new Error('Respon network tidak oke');
+        
+        guestDatabase = await response.json();
+        console.log("Data berhasil masuk:", guestDatabase);
+        
+        btn.disabled = false;
+        btn.innerText = "CEK DAFTAR";
+        checkUrlParam();
+    } catch (e) {
+        console.error("Gagal load database:", e);
+        btn.innerText = "GAGAL LOAD (KLIK UNTUK COBA LAGI)";
+        btn.disabled = false;
+        btn.onclick = () => fetchGuestList(); // Biar bisa dicoba klik lagi
+    }
+}
         function manualSearch() {
             const val = document.getElementById('nameInputManual').value.trim().toLowerCase();
             const error = document.getElementById('error-message');
