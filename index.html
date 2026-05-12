@@ -51,6 +51,7 @@
         .btn-open {
             padding: 12px 35px; background: var(--primary-gold); color: white;
             border: none; border-radius: 30px; cursor: pointer; letter-spacing: 2px;
+            font-weight: 600;
         }
 
         .guest-name { font-size: 1.8rem; font-weight: 500; color: var(--primary-gold); margin-bottom: 25px; text-transform: uppercase; }
@@ -64,9 +65,13 @@
             z-index: 1;
         }
         
-        section { padding: 80px 20px; max-width: 800px; margin: auto; text-align: center; }
+        section { padding: 60px 20px; max-width: 800px; margin: auto; text-align: center; }
 
-        /* SURAH AR-RUM STYLE */
+        /* INTRO & SPEECH STYLE */
+        .intro-text { font-size: 1.1rem; color: #777; margin-bottom: 5px; }
+        .personalized-name { font-size: 1.4rem; font-weight: 600; color: var(--primary-gold); margin-bottom: 20px; display: block; }
+        .wedding-speech { line-height: 1.8; color: #555; text-align: center; margin: 30px 0; font-style: italic; }
+
         .scripture-box {
             margin-bottom: 50px;
             padding: 30px;
@@ -74,29 +79,27 @@
             border-top: 1px double var(--primary-gold);
         }
         .verse-indo { 
-            font-size: 1.1rem; 
+            font-size: 1rem; 
             line-height: 1.8; 
             color: #555; 
             margin-bottom: 15px;
-            font-style: italic;
         }
         .verse-ref { 
             font-weight: bold; 
             color: var(--primary-gold); 
             letter-spacing: 3px; 
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
-        h3 { font-family: 'Great Vibes', cursive; font-size: 3.5rem; color: var(--primary-gold); margin: 20px 0; }
+        h3 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--primary-gold); margin: 20px 0; }
 
         .gallery-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 40px 0; }
         .gallery-item { width: 100%; height: 250px; object-fit: cover; border-radius: 15px; }
 
-        /* --- BUKU TAMU & ANONIM BOX --- */
+        /* --- BUKU TAMU --- */
         .comment-section {
             background: #fff; padding: 40px 30px; border-radius: 25px;
             text-align: left; border: 1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-top: 20px;
         }
 
         .comment-form input, .comment-form textarea {
@@ -104,31 +107,15 @@
             border: 1px solid #ddd; border-radius: 12px; font-family: inherit; font-size: 1rem;
         }
 
-        /* PERBAIKAN TAMPILAN ANONIM */
         .anon-container {
-            display: flex !important;
-            align-items: center !important;
-            gap: 12px;
-            margin: 10px 0 25px 0;
-            padding: 10px;
-            background: #f9f9f9;
-            border-radius: 10px;
-            cursor: pointer;
+            display: flex; align-items: center; gap: 12px;
+            margin: 0 0 25px 0; padding: 12px;
+            background: #fdfaf7; border-radius: 10px; cursor: pointer;
+            border: 1px dashed var(--primary-gold);
         }
 
-        .anon-container input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin: 0;
-            cursor: pointer;
-        }
-
-        .anon-label {
-            font-size: 0.95rem;
-            color: #444;
-            user-select: none;
-            cursor: pointer;
-        }
+        .anon-container input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+        .anon-label { font-size: 0.9rem; color: #666; user-select: none; cursor: pointer; }
 
         .hidden-up { transform: translateY(-100vh); }
         .show-content { display: block !important; opacity: 1 !important; }
@@ -138,8 +125,9 @@
 </head>
 <body>
 
+    <!-- HALAMAN PEMBUKA -->
     <div id="opening-page">
-        <p style="letter-spacing: 5px;">THE WEDDING OF</p>
+        <p style="letter-spacing: 5px; font-size: 0.8rem;">THE WEDDING OF</p>
         <h2 class="animate-title">Denes & Ana</h2>
         <p>12 . 12 . 2026</p>
 
@@ -147,7 +135,7 @@
             <input type="text" id="nameInputManual" placeholder="Ketik nama lengkap Anda...">
             <br>
             <button class="btn-open" id="searchBtn" onclick="manualSearch()">CEK DAFTAR</button>
-            <div id="error-message" style="display:none; color:#ff6b6b; margin-top:10px;">Nama tidak terdaftar.</div>
+            <div id="error-message" style="display:none; color:#ff6b6b; margin-top:10px; font-size: 0.9rem;">Nama tidak terdaftar dalam list tamu.</div>
         </div>
 
         <div id="guest-found-area" style="display: none; margin-top: 25px;">
@@ -157,16 +145,27 @@
         </div>
     </div>
 
+    <!-- KONTEN UTAMA -->
     <div id="main-content">
         <section id="content-area">
             
+            <div id="personal-intro">
+                <p class="intro-text">Yth. Saudara/i,</p>
+                <span class="personalized-name" id="intro-name">Tamu Kehormatan</span>
+            </div>
+
             <div class="scripture-box">
                 <p class="verse-indo">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang."</p>
                 <p class="verse-ref">QS. AR-RUM: 21</p>
             </div>
             
             <h3>Assalamu’alaikum Wr. Wb.</h3>
-            <p>Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Dengan memohon rahmat dan ridho-Nya, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.</p>
+            
+            <div class="wedding-speech">
+                "Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Cinta bukan sekadar kata, melainkan sebuah komitmen untuk saling melengkapi dalam ibadah terpanjang. Hari ini adalah lembaran baru bagi kami untuk menyatukan dua hati dalam ikatan suci. Kehadiran serta doa restu Anda adalah kado terindah bagi memulai perjalanan ini."
+            </div>
+
+            <p>Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami:</p>
 
             <div class="gallery-container">
                 <img class="gallery-item" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600" alt="Foto 1">
@@ -180,12 +179,16 @@
                 <h3 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px;">Buku Tamu</h3>
                 
                 <div class="comment-form">
-                    <input type="text" id="guestName" placeholder="Nama Anda" readonly>
-                    <textarea id="guestComment" rows="4" placeholder="Tulis ucapan doa..."></textarea>
+                    <!-- Nama diisi otomatis dari login, readonly agar data database tetap valid -->
+                    <label style="font-size: 0.8rem; color: #888;">Mengirim sebagai:</label>
+                    <input type="text" id="guestName" readonly style="background: #f0f0f0; color: #666;">
                     
-                    <div class="anon-container" onclick="document.getElementById('isAnon').click()">
+                    <textarea id="guestComment" rows="4" placeholder="Tulis ucapan doa terbaik Anda..."></textarea>
+                    
+                    <!-- Opsi Anonim -->
+                    <div class="anon-container" onclick="toggleAnon()">
                         <input type="checkbox" id="isAnon" onclick="event.stopPropagation()">
-                        <span class="anon-label">Kirim sebagai Anonim (Hamba Allah)</span>
+                        <span class="anon-label">Sembunyikan nama saya (Tampil sebagai Hamba Allah)</span>
                     </div>
 
                     <button class="btn-send" id="submitBtn" onclick="submitToSheets()" style="width:100%; padding:18px; background:var(--primary-gold); color:white; border:none; border-radius:30px; cursor:pointer; font-weight:bold; font-size: 1rem; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);">Kirim Ucapan</button>
@@ -201,14 +204,16 @@
     </div>
 
     <script>
+        // Ganti dengan URL Web App Google Script Anda
         const databaseURL = 'https://script.google.com/macros/s/AKfycbyzQ00kvSZkA8_ZLuSWMjAm5DVNDqZw4SXOxvsdjGy6tORL_ZJqXUW4gMMAVQ47kuiX4Q/exec';
         const commentURL = 'https://script.google.com/macros/s/AKfycbystXUr4XVi5wGqnAFC__0nkuNHMxSnCMt2hZUpJ8W1ISuE6rt0VMHU0dq6V3k9jTDvXg/exec';
 
         let guestDatabase = [];
+        let currentGuestName = "";
 
         async function fetchGuestList() {
             const btn = document.getElementById('searchBtn');
-            btn.innerText = "MEMUAT...";
+            btn.innerText = "MENGECEK...";
             try {
                 const response = await fetch(`${databaseURL}?action=getGuests`);
                 guestDatabase = await response.json();
@@ -216,6 +221,7 @@
                 checkUrlParam();
             } catch (e) {
                 btn.innerText = "CEK DAFTAR";
+                console.error("Gagal mengambil daftar tamu");
             }
         }
 
@@ -231,10 +237,17 @@
         }
 
         function showGuestResult(name) {
+            // Format huruf kapital tiap kata
+            const formattedName = name.split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
+            currentGuestName = formattedName;
+
             document.getElementById('search-container').style.display = 'none';
             document.getElementById('guest-found-area').style.display = 'block';
-            document.getElementById('guest-target').innerText = name;
-            document.getElementById('guestName').value = name.toUpperCase();
+            document.getElementById('guest-target').innerText = formattedName;
+            
+            // Masukkan ke Intro & Input Buku Tamu
+            document.getElementById('intro-name').innerText = formattedName;
+            document.getElementById('guestName').value = formattedName;
         }
 
         function checkUrlParam() {
@@ -244,6 +257,11 @@
                 const clean = to.replace(/\+/g, ' ').toLowerCase();
                 if (guestDatabase.includes(clean)) showGuestResult(clean);
             }
+        }
+
+        function toggleAnon() {
+            const cb = document.getElementById('isAnon');
+            cb.checked = !cb.checked;
         }
 
         function openInvitation() {
@@ -260,10 +278,18 @@
                 const res = await fetch(commentURL);
                 const data = await res.json();
                 display.innerHTML = '';
+                
                 data.reverse().forEach(item => {
                     const div = document.createElement('div');
                     div.style.padding = "20px 0"; div.style.borderBottom = "1px solid #f5f5f5";
-                    div.innerHTML = `<strong style="color:var(--primary-gold); display:block; margin-bottom:5px;">${item.name}</strong><p style="margin:0; line-height:1.5;">${item.comment}</p>`;
+                    
+                    // Logika tampilan: Jika di database isAnon true, tampilkan Hamba Allah
+                    const displayName = item.isAnon ? "Hamba Allah" : item.name;
+                    
+                    div.innerHTML = `
+                        <strong style="color:var(--primary-gold); display:block; margin-bottom:5px;">${displayName}</strong>
+                        <p style="margin:0; line-height:1.5; color:#555;">${item.comment}</p>
+                    `;
                     display.appendChild(div);
                 });
             } catch (e) { display.innerHTML = 'Gagal memuat ucapan.'; }
@@ -274,20 +300,25 @@
             const realName = document.getElementById('guestName').value;
             const isAnon = document.getElementById('isAnon').checked;
             const comm = document.getElementById('guestComment').value;
-            
-            const nameToSubmit = isAnon ? "Hamba Allah" : realName;
 
             if(!comm) return alert("Silakan tulis pesan/doa Anda.");
             
             btn.disabled = true; btn.innerText = "Mengirim...";
+            
             try {
+                // Mengirim Nama Asli dan Status Anonim ke Google Sheets
                 await fetch(commentURL, { 
                     method: 'POST', 
-                    body: JSON.stringify({ name: nameToSubmit, comment: comm }) 
+                    body: JSON.stringify({ 
+                        name: realName, 
+                        comment: comm,
+                        isAnon: isAnon // Properti ini dikirim ke DB agar admin tahu siapa pengirim aslinya
+                    }) 
                 });
+                
                 document.getElementById('guestComment').value = '';
                 document.getElementById('isAnon').checked = false;
-                alert("Ucapan terkirim!"); 
+                alert("Terima kasih atas doa restunya!"); 
                 loadComments();
             } catch (e) { 
                 alert("Gagal mengirim ucapan."); 
