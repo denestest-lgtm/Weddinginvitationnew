@@ -91,7 +91,6 @@
             transition: opacity 1.5s ease;
         }
 
-        /* PERBAIKAN SPACE: Padding section diperkecil */
         section {
             padding: 40px 20px; 
             max-width: 900px;
@@ -138,7 +137,6 @@
 
         .gift-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
         
-        /* PERBAIKAN: Ukuran Gift Box diperkecil sesuai konfirmasi sebelumnya */
         .gift-box { 
             border: 1px solid #e0e0e0; 
             padding: 10px 15px; 
@@ -149,10 +147,9 @@
         .bank-name { font-weight: bold; font-size: 0.75rem; color: var(--primary-gold); letter-spacing: 1px; }
         .acc-number { font-size: 0.95rem; margin: 5px 0; display: block; font-weight: 500; }
 
-        /* --- GUEST BOOK --- */
         .comment-section {
             background-color: #fff; padding: 30px; border-radius: 25px;
-            margin-top: 0; /* PERBAIKAN SPACE: Menghilangkan margin atas */
+            margin-top: 0;
             text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
             border: 1px solid #f0f0f0;
         }
@@ -162,7 +159,6 @@
             border: 1px solid #ddd; border-radius: 8px; font-family: 'Montserrat', sans-serif;
         }
 
-        /* PERBAIKAN: Posisi Anonim rapat ke kiri dan rapi */
         .anon-wrapper {
             display: flex;
             align-items: center;
@@ -177,17 +173,7 @@
         }
 
         .anon-wrapper input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin: 0;
-            cursor: pointer;
-        }
-
-        .anon-wrapper label {
-            cursor: pointer;
-            font-size: 0.85rem;
-            color: #666;
-            user-select: none;
+            width: 18px; height: 18px; margin: 0; cursor: pointer;
         }
 
         .btn-send {
@@ -218,20 +204,14 @@
         <p>08 . 08 . 2026</p>
 
         <div id="search-container">
-            <input type="text" id="nameInputManual" placeholder="Ketik nama lengkap Anda...">
+            <input type="text" id="nameInputManual" placeholder="Ketik nama Anda..." oninput="manualSearch()">
+            
+            <div id="suggestion-list" style="margin-top: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;"></div>
+            
             <br>
             <button class="btn-open" id="searchBtn" onclick="manualSearch()">CEK DAFTAR</button>
-            <p id="error-message" style="display:none; color:#ff6b6b; margin-top:10px; font-size: 0.8rem;">Nama tidak terdaftar.</p>
+            <p id="error-message" style="display:none; color:#ff6b6b; margin-top:10px; font-size: 0.8rem;"></p>
         </div>
-        <div id="search-container">
-    <input type="text" id="nameInputManual" placeholder="Ketik nama Anda..." oninput="manualSearch()">
-    
-    <div id="suggestion-list" style="margin-top: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;"></div>
-    
-    <br>
-    <button class="btn-open" id="searchBtn" onclick="manualSearch()">CEK DAFTAR</button>
-    <p id="error-message" style="display:none; color:#ff6b6b; margin-top:10px; font-size: 0.8rem;"></p>
-</div>
 
         <div id="guest-found-area" style="display: none; margin-top: 25px;">
             <p style="font-size:0.7rem; letter-spacing:2px; opacity:0.8;">KAMI MENGUNDANG ANDA:</p>
@@ -254,7 +234,7 @@
                 <h3>Assalamu’alaikum Wr. Wb.</h3>
                 <div class="speech-text">
                     <p>Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Segala puji bagi Allah yang telah menuntun langkah kami hingga sampai pada titik ini.</p>
-                    <p>Berawal dari pertemuan yang tak disangka, tumbuh menjadi keyakinan untuk saling menjaga. Bagi kami, pernikahan adalah sebuah perjalanan ibadah panjang untuk saling melengkapi dalam ketaatan kepada-Nya.</p>
+                    <p>Berawal dari pertemuan yang tak disangka, tumbuh menjadi keyakinan untuk saling menjaga.</p>
                 </div>
             </div>
 
@@ -268,23 +248,15 @@
         <section id="event" style="background-color: var(--soft-gold);">
             <h3>Waktu & Tempat</h3>
             <div class="card">
-                <p>Kami sangat menantikan kehadiran Anda pada hari bahagia kami:</p>
-                <div class="event-info">Sabtu, 08 Agustus 2026</div>
-                <div style="margin-bottom: 25px;">
-                    <p><strong>Akad Nikah:</strong> 09:00 WIB</p>
-                    <p><strong>Resepsi:</strong> 11:00 - 14:00 WIB</p>
-                </div>
-                <p><strong>Gedung Putih Kasih Sayang</strong><br>Jl. magetan jalan-jalan</p>
-                <a href="https://maps.app.goo.gl/oCcwoM7Ms6xamp4G9" target="_blank" style="display:inline-block; margin-top:20px; color:var(--primary-gold); text-decoration:none; font-weight:500;">LIHAT GOOGLE MAPS →</a>
+                <p>Sabtu, 08 Agustus 2026</p>
+                <div class="event-info">Akad: 09:00 WIB | Resepsi: 11:00 WIB</div>
+                <p><strong>Gedung Putih Kasih Sayang</strong></p>
+                <a href="https://maps.app.goo.gl/oCcwoM7Ms6xamp4G9" target="_blank" style="color:var(--primary-gold); text-decoration:none;">LIHAT GOOGLE MAPS →</a>
             </div>
         </section>
 
         <section id="gift">
-            <h3 style="font-size: 2.5rem;">Wedding Gift</h3>
-            <p style="font-size: 0.9rem; color: #666; margin: -10px auto 25px auto; line-height: 1.6; max-width: 600px;">
-                apabila ada yang tidak sempat datang dan ingin menyumbang bisa ke nomor berikut
-            </p>
-
+            <h3>Wedding Gift</h3>
             <div class="gift-container">
                 <div class="gift-box">
                     <span class="bank-name">BCA</span>
@@ -299,28 +271,24 @@
             </div>
         </section>
 
-        <section id="comments" style="padding-top: 10px;">
+        <section id="comments">
             <div class="comment-section">
-                <h3 style="font-size: 2.2rem; text-align: center; margin-bottom: 20px;">Buku Tamu</h3>
+                <h3 style="font-size: 2.2rem; text-align: center;">Buku Tamu</h3>
                 <div class="comment-form">
-                    <input type="text" id="guestName" readonly style="background: #f5f5f5; color: #888;">
-                    <textarea id="guestComment" rows="3" placeholder="Berikan ucapan & doa restu..."></textarea>
-                    
+                    <input type="text" id="guestName" readonly style="background: #f5f5f5;">
+                    <textarea id="guestComment" rows="3" placeholder="Berikan ucapan..."></textarea>
                     <div class="anon-wrapper" onclick="document.getElementById('isAnonymous').click()">
                         <input type="checkbox" id="isAnonymous" onclick="event.stopPropagation()">
-                        <label for="isAnonymous">Kirim sebagai Hamba Allah</label>
+                        <label>Kirim sebagai Hamba Allah</label>
                     </div>
-
                     <button class="btn-send" id="submitBtn" onclick="submitToSheets()">Kirim Ucapan</button>
                 </div>
                 <div class="comment-display" id="commentDisplay"></div>
             </div>
         </section>
 
-        <footer style="padding: 60px 20px; text-align: center; background: #eee;">
-            <p>Terima Kasih Atas Doa serta Restunya</p>
-            <h3 style="font-size: 2rem; margin-top: 10px;">Denes & Ana</h3>
-            <p style="font-size: 0.8rem; margin-top: 30px; opacity: 0.5;">© 2026 . Designed with Heart</p>
+        <footer style="padding: 40px; text-align: center;">
+            <h3 style="font-size: 2rem;">Denes & Ana</h3>
         </footer>
     </div>
 
@@ -340,42 +308,35 @@
         }
 
         function manualSearch() {
-    const val = document.getElementById('nameInputManual').value.trim().toLowerCase();
-    const errorMsg = document.getElementById('error-message');
-    const suggestionContainer = document.getElementById('suggestion-list');
-    
-    // Reset tampilan setiap kali mengetik
-    suggestionContainer.innerHTML = '';
-    errorMsg.style.display = 'none';
-
-    if (val.length < 2) return; // Mulai mencari setelah 2 huruf
-
-    // Filter database berdasarkan input
-    const filteredGuests = guestDatabase.filter(name => name.toLowerCase().includes(val));
-
-    if (filteredGuests.length > 0 && filteredGuests.length <= 4) {
-        // JIKA KETEMU 1-4 NAMA: Munculkan tombol pilihan
-        filteredGuests.forEach(name => {
-            const btn = document.createElement('button');
-            const formattedName = name.split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
+            const val = document.getElementById('nameInputManual').value.trim().toLowerCase();
+            const errorMsg = document.getElementById('error-message');
+            const suggestionContainer = document.getElementById('suggestion-list');
             
-            btn.innerText = formattedName;
-            btn.style.cssText = "padding: 8px 15px; border-radius: 20px; border: 1px solid var(--primary-gold); background: white; color: var(--primary-gold); cursor: pointer; font-size: 0.8rem; font-family: 'Montserrat';";
-            
-            // Jika tombol diklik, langsung pilih nama tersebut
-            btn.onclick = () => showGuestFound(name);
-            suggestionContainer.appendChild(btn);
-        });
-    } else if (filteredGuests.length > 4) {
-        // JIKA LEBIH DARI 4 NAMA
-        errorMsg.innerText = "Banyak nama ditemukan, mohon ketik lebih spesifik.";
-        errorMsg.style.display = 'block';
-    } else {
-        // JIKA TIDAK ADA SAMA SEKALI
-        errorMsg.innerText = "Nama tidak terdaftar.";
-        errorMsg.style.display = 'block';
-    }
-}
+            suggestionContainer.innerHTML = '';
+            errorMsg.style.display = 'none';
+
+            if (val.length < 2) return;
+
+            const filteredGuests = guestDatabase.filter(name => name.toLowerCase().includes(val));
+
+            if (filteredGuests.length > 0 && filteredGuests.length <= 4) {
+                filteredGuests.forEach(name => {
+                    const btn = document.createElement('button');
+                    const formattedName = name.split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
+                    btn.innerText = formattedName;
+                    btn.style.cssText = "padding: 8px 15px; border-radius: 20px; border: 1px solid var(--primary-gold); background: white; color: var(--primary-gold); cursor: pointer; font-size: 0.8rem;";
+                    btn.onclick = () => showGuestFound(name);
+                    suggestionContainer.appendChild(btn);
+                });
+            } else if (filteredGuests.length > 4) {
+                errorMsg.innerText = "Banyak nama ditemukan, mohon ketik lebih spesifik.";
+                errorMsg.style.display = 'block';
+            } else {
+                errorMsg.innerText = "Nama tidak terdaftar.";
+                errorMsg.style.display = 'block';
+            }
+        }
+
         function showGuestFound(name) {
             const formatted = name.split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
             loggedInName = formatted;
@@ -402,30 +363,20 @@
             loadComments();
         }
 
-        const photoDatabase = [
-            "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600", 
-            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600",
-            "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600",
-            "https://images.unsplash.com/photo-1519741497674-611481863552?w=600",
-            "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=600"
-        ];
+        // GALERI & KOMENTAR (Logika sama seperti sebelumnya)
+        const photoDatabase = ["https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600", "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600", "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600"];
         let currentIndex = 0;
         function updateGallery() {
             const img1 = document.getElementById('img1'), img2 = document.getElementById('img2'), img3 = document.getElementById('img3');
             if(!img1) return;
-            img1.style.opacity = 0; img2.style.opacity = 0; img3.style.opacity = 0;
-            setTimeout(() => {
-                img1.src = photoDatabase[currentIndex % photoDatabase.length];
-                img2.src = photoDatabase[(currentIndex + 1) % photoDatabase.length];
-                img3.src = photoDatabase[(currentIndex + 2) % photoDatabase.length];
-                img1.style.opacity = 1; img2.style.opacity = 1; img3.style.opacity = 1;
-            }, 800);
-            currentIndex = (currentIndex + 3) % photoDatabase.length;
+            img1.src = photoDatabase[currentIndex % photoDatabase.length];
+            img2.src = photoDatabase[(currentIndex + 1) % photoDatabase.length];
+            img3.src = photoDatabase[(currentIndex + 2) % photoDatabase.length];
+            currentIndex = (currentIndex + 1) % photoDatabase.length;
         }
 
         async function loadComments() {
             const display = document.getElementById('commentDisplay');
-            display.innerHTML = '<p style="text-align:center; font-size:0.8rem;">Memuat ucapan...</p>';
             try {
                 const response = await fetch(commentURL);
                 const data = await response.json();
@@ -437,7 +388,7 @@
                     div.innerHTML = `<strong>${name}</strong><p>${item.comment}</p>`;
                     display.appendChild(div);
                 });
-            } catch (e) { display.innerHTML = 'Gagal memuat ucapan.'; }
+            } catch (e) { }
         }
 
         async function submitToSheets() {
@@ -447,9 +398,8 @@
             try {
                 await fetch(commentURL, { method: 'POST', body: JSON.stringify({ name: loggedInName, comment: comm.value, isAnon: anon.checked }) });
                 comm.value = ''; anon.checked = false;
-                alert("Terima kasih!");
                 loadComments();
-            } catch (e) { alert("Gagal mengirim."); }
+            } catch (e) { }
             finally { btn.disabled = false; btn.innerText = "Kirim Ucapan"; }
         }
 
