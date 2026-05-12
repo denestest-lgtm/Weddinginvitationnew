@@ -152,9 +152,32 @@
             border: 1px solid #ddd; border-radius: 8px; font-family: 'Montserrat', sans-serif;
         }
 
-        .anon-wrapper { display: flex; align-items: center; gap: 8px; margin-bottom: 15px; font-size: 0.85rem; color: #666; }
-        .anon-wrapper input { width: auto; margin: 0; }
+        ..anon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Merapatkan konten ke kiri */
+    gap: 10px; /* Jarak antara checkbox dan teks */
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #fdfaf7; /* Warna latar lembut agar serupa gambar */
+    border-radius: 12px;
+    border: 1px dashed var(--primary-gold);
+    cursor: pointer;
+}
 
+.anon-wrapper input[type="checkbox"] {
+    width: 18px; /* Ukuran checkbox yang lebih proporsional */
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.anon-wrapper label {
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #666;
+    user-select: none; /* Mencegah teks terpilih saat diklik */
+}
         .btn-send {
             background: var(--primary-gold); color: white; border: none;
             padding: 10px 30px; border-radius: 20px; cursor: pointer;
