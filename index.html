@@ -331,14 +331,33 @@
         }
 
         function manualSearch() {
-            const val = document.getElementById('nameInputManual').value.trim().toLowerCase();
-            if (guestDatabase.includes(val)) {
-                showGuestFound(val);
-            } else {
-                document.getElementById('error-message').style.display = 'block';
-            }
-        }
+    const val = document.getElementById('nameInputManual').value.trim().toLowerCase();
+    const errorMsg = document.getElementById('error-message');
+    
+    // Validasi input kosong
+    if (val === "") {
+        errorMsg.innerText = "Silakan masukkan nama Anda.";
+        errorMsg.style.display = 'block';
+        return;
+    }
 
+    // Mencari tamu yang namanya mengandung kata yang diketik (Partial Match)
+    const filteredGuests = guestDatabase.filter(name => name.toLowerCase().includes(val));
+
+    if (filteredGuests.length === 1) {
+        // Jika hanya ketemu 1 nama yang cocok, langsung masuk
+        showGuestFound(filteredGuests[0]);
+        errorMsg.style.display = 'none';
+    } else if (filteredGuests.length > 1) {
+        // Jika ketik "ali" dan ada "ali puji" & "ali yoga", munculkan pesan ini
+        errorMsg.innerText = "Ditemukan beberapa nama yang mirip, mohon ketik lebih lengkap.";
+        errorMsg.style.display = 'block';
+    } else {
+        // Jika tidak ada yang mengandung kata tersebut sama sekali
+        errorMsg.innerText = "Nama tidak terdaftar.";
+        errorMsg.style.display = 'block';
+    }
+}
         function showGuestFound(name) {
             const formatted = name.split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
             loggedInName = formatted;
